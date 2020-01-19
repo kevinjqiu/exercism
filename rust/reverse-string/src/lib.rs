@@ -1,3 +1,6 @@
+use unicode_segmentation::UnicodeSegmentation;
+
 pub fn reverse(input: &str) -> String {
-    input.chars().rev().collect()
+    let g = UnicodeSegmentation::graphemes(input, true);
+    g.rev().collect()
 }
