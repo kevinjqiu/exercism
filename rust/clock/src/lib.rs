@@ -6,9 +6,21 @@ pub struct Clock {
     minutes: i32,
 }
 
+fn div_mod(a: i32, b: i32) -> (i32, i32) {
+    let mut q = a / b;
+    let mut rem = a - q * b;
+    if rem < 0 {
+        rem += b;
+        q -= 1;
+    }
+    (q, rem)
+}
+
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
-        Clock{hours: hours, minutes: minutes}
+        let (h_carry, m) = div_mod(minutes, 60);
+        let (_, h) = div_mod(hours + h_carry, 24);
+        Clock{hours: h, minutes: m}
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
